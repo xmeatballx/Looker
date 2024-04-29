@@ -152,7 +152,14 @@ export function FileView(props: Props) {
       })
       await unregister('CommandOrControl+n');
       await register('CommandOrControl+n', () => {
-        setNameInputVisible(true)
+        setNameInputVisible(true);
+        setCreateMode('file');
+        nameFormInput?.focus()
+      })
+      await unregister('CommandOrControl+Shift+n');
+      await register('CommandOrControl+Shift+n', () => {
+        setNameInputVisible(true);
+        setCreateMode('folder');
         nameFormInput?.focus()
       })
       unlisten = await listen('menu', (event) => {
@@ -246,7 +253,7 @@ export function FileView(props: Props) {
                 <input
                   name="name"
                   class="w-[200%] dark:bg-slate-700 p-1 font-normal"
-                  placeholder={`name your file ${createMode()}`}
+                  placeholder={`name your ${createMode()}`}
                   ref={searchBar}
                   ref={nameFormInput}
                   tabindex={1}
